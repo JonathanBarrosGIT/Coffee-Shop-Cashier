@@ -1,15 +1,9 @@
 import java.util.ArrayList;
 
 
-public class Pastry 
+public class Pastry extends Product
 {
-	private ArrayList<String> string;
-	private ArrayList<Integer> price = new ArrayList<Integer>();;
-	
-	Pastry()
-	{
-		string = new ArrayList<String>();
-	}
+	Pastry() {}
 
 	public void getSelectedButton(int[] i, String[] k)
 	{
@@ -45,24 +39,5 @@ public class Pastry
 				price.add(300);
 			}
 		}
-	}
-	
-	public void clear()
-	{
-		string.clear();
-		price.clear();
-	}
-
-	public ArrayList<String> getString() {
-		return string;
-	}
-	public void setString(ArrayList<String> string) {
-		this.string = string;
-	}
-	public ArrayList<Integer> getPrice() {
-		return price;
-	}
-	public void setPrice(ArrayList<Integer> price) {
-		this.price = price;
 	}
 }

@@ -3,16 +3,9 @@ import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 
 
-public class Bagel 
+public class Bagel extends Product
 {
-	private ArrayList<String> string;
-	private ArrayList<Integer> price;
-	
-	Bagel()
-	{
-		string = new ArrayList<String>();
-		price = new ArrayList<Integer>();
-	}
+	Bagel() {}
 
 	public void getSelectedButton(ButtonGroup group, ButtonGroup group2)
 	{
@@ -24,12 +17,6 @@ public class Bagel
 			product = group2.getSelection().getActionCommand();
 			string.add(product);
 		}
-	}
-	
-	public void clear()
-	{
-		string.clear();
-		price.clear();
 	}
 	
 	public void pricing()
@@ -65,18 +52,5 @@ public class Bagel
 				price.add(100);
 			}
 		}
-	}
-	
-	public ArrayList<String> getString() {
-		return string;
-	}
-	public void setString(ArrayList<String> string) {
-		this.string = string;
-	}
-	public ArrayList<Integer> getPrice() {
-		return price;
-	}
-	public void setPrice(ArrayList<Integer> price) {
-		this.price = price;
 	}
 }
