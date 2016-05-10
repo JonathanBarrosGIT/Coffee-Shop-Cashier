@@ -1,134 +1,37 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Enumeration;
+
 
 public class BagelApp extends JFrame{
 
-	/* 
-	 *	  Declarations
-	 */
-	
-	private int width = 800;
-	private int height = 600;
-	private JPanel parent;
-	private JPanel panel1;
-	private JPanel panel2a;
-	private JPanel panel2b;
-	private JPanel panel2c;
-	private JPanel panel3;
-	private JLabel title;
-	private JPanel buttons;
-	
-	private JRadioButton product1;
-	private JRadioButton product2;
-	private JRadioButton product3;
-	private ButtonGroup productgroup;
-	
-	private JPanel subpanel1;
-	private JPanel subpanel2;
-	private JPanel subpanel3;
-	private JPanel subpanel4;
-	private JPanel subpanel5;
-	private JPanel subpanel6;
-	private JPanel subpanel7;
-	private JPanel subpanel8;
-	private JPanel subpanel9;
-	
-	private JTextArea text;
+	BagelAppProperties properties = new BagelAppProperties();
 
-	private JScrollPane scroll;
-	
-	//	PANEL 2A
-	
-	private JButton button1;
-	private JButton button2;
-	private JButton button3;
-	
-	private JRadioButton small;
-	private JRadioButton medium;
-	private JRadioButton large;
-	private ButtonGroup group1;
-	
-	private JRadioButton decafe;
-	private JRadioButton regular;
-	private JRadioButton roast;
-	private ButtonGroup group2;
-	
-	private JCheckBox cream;
-	private JCheckBox sugar;
-	
-	// PANEL 2B
-	
-	private JRadioButton white;
-	private JRadioButton wheat;
-	private JRadioButton salt;
-	private JRadioButton seseme;
-	private JRadioButton popy;
-	private ButtonGroup group4;
-	
-	private JRadioButton cc;
-	private JRadioButton lcc;
-	private JRadioButton gc;
-	private JRadioButton butter;
-	private JRadioButton jam;
-	private ButtonGroup group5;
-	
-	private JCheckBox lox;
-	private JCheckBox novalox;
-	
-	// PANEL 2C
-	
-	private String[] pastrylist = {"Apricot Danish", "Prune Danish", "Crossant", "English Muffin", "Blueberry Muffin"};
-	private JList list;
-	private int[] indices = {};
-	
-	// OTHERS
-	
-	private JLabel quantitylabel;
-	private JTextField quantity;
-	private JRadioButton membery;
-	private JRadioButton membern;
-	private ButtonGroup membergroup;
-	private JButton delete;
-	private int q = 1;
-	
-	private BorderLayout layout;
-	
-	private boolean isMember;
-
-	private Order order;
-	private Coffee coffee;
-	private Bagel bagel;
-	private Pastry pastry;
-	
 	private BagelApp()
 	{
 		setTitle("Bagel Order Application");
-		setSize(width, height);
+		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout(10,10));
 		setBackground(Color.LIGHT_GRAY);
 		
 		buildPanel();
-		add(panel3, BorderLayout.CENTER);
-		add(title, BorderLayout.NORTH);
-		add(buttons, BorderLayout.SOUTH);
-		add(parent, BorderLayout.WEST);
+		add(properties.panel3, BorderLayout.CENTER);
+		add(properties.title, BorderLayout.NORTH);
+		add(properties.buttons, BorderLayout.SOUTH);
+		add(properties.parent, BorderLayout.WEST);
 		
 		setVisible(true);
 		
 		// CALL CLASSES
-		order = new Order();
-		coffee = new Coffee();
-		bagel = new Bagel();
-		pastry = new Pastry();
+		properties.order = new Order();
+		properties.coffee = new Coffee();
+		properties.bagel = new Bagel();
+		properties.pastry = new Pastry();
 	}
 	
 	private void buildPanel()
@@ -139,457 +42,481 @@ public class BagelApp extends JFrame{
 		
 		// PARENT PANEL
 		
-		parent = new JPanel();
-		parent.setLayout(new BorderLayout(10,10));
+		properties.parent = new JPanel();
+		properties.parent.setLayout(new BorderLayout(10,10));
 		
-		title = new JLabel("Order Entry Screen");
-		title.setHorizontalAlignment(SwingConstants.CENTER);
+		properties.title = new JLabel("Order Entry Screen");
+		properties.title.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		panel1 = new JPanel();
-		panel2a = new JPanel();
-		panel2b = new JPanel();
-		panel2c = new JPanel();
-		panel3 = new JPanel();
+		properties.panel1 = new JPanel();
+		properties.panel2a = new JPanel();
+		properties.panel2b = new JPanel();
+		properties.panel2c = new JPanel();
+		properties.panel3 = new JPanel();
 		
 		// PANEL1
 		
-		panel1.setBorder(BorderFactory.createTitledBorder("Products"));
-		panel1.setLayout(new GridLayout(3,1));
+		properties.panel1.setBorder(BorderFactory.createTitledBorder("Products"));
+		properties.panel1.setLayout(new GridLayout(3,1));
 		
-		product1 = new JRadioButton("Coffee");
-		product2 = new JRadioButton("Bagel");
-		product3 = new JRadioButton("Pastry");
-		productgroup = new ButtonGroup();
+		properties.product1 = new JRadioButton("Coffee");
+		properties.product2 = new JRadioButton("Bagel");
+		properties.product3 = new JRadioButton("Pastry");
+		properties.productgroup = new ButtonGroup();
 		
-		productgroup.add(product1);
-		productgroup.add(product2);
-		productgroup.add(product3);
+		properties.productgroup.add(properties.product1);
+		properties.productgroup.add(properties.product2);
+		properties.productgroup.add(properties.product3);
 		
-		product1.addActionListener(new ButtonListener());
-		product2.addActionListener(new ButtonListener());
-		product3.addActionListener(new ButtonListener());
+		properties.product1.addActionListener(new ButtonListener());
+		properties.product2.addActionListener(new ButtonListener());
+		properties.product3.addActionListener(new ButtonListener());
 		
-		panel1.add(product1);
-		panel1.add(product2);
-		panel1.add(product3);
-		
-		panel2a.setLayout(new GridLayout(3,1));
-		panel2a.setPreferredSize(new Dimension(180, 650));
-		panel2b.setLayout(new GridLayout(3,1));
-		panel2b.setPreferredSize(new Dimension(180, 650));
-		panel2c.setLayout(new GridLayout(2,1));
-		panel2c.setPreferredSize(new Dimension(180, 650));
-		
-		subpanel1 = new JPanel();
-		subpanel2 = new JPanel();
-		subpanel3 = new JPanel();
+		properties.panel1.add(properties.product1);
+		properties.panel1.add(properties.product2);
+		properties.panel1.add(properties.product3);
+
+		properties.panel2a.setLayout(new GridLayout(3,1));
+		properties.panel2a.setPreferredSize(new Dimension(180, 650));
+		properties.panel2b.setLayout(new GridLayout(3,1));
+		properties.panel2b.setPreferredSize(new Dimension(180, 650));
+		properties.panel2c.setLayout(new GridLayout(2,1));
+		properties.panel2c.setPreferredSize(new Dimension(180, 650));
+
+		properties.subpanel1 = new JPanel();
+		properties.subpanel2 = new JPanel();
+		properties.subpanel3 = new JPanel();
 		
 		// PANEL3
-		
-		panel3.setLayout(new BorderLayout());
-		
-		subpanel8 = new JPanel();
-		subpanel9 = new JPanel();
-		subpanel9.setLayout(new BorderLayout());
-		
-		quantitylabel = new JLabel("Quantity: ");
-		quantity = new JTextField(5);
-		membery = new JRadioButton("Member");
-		membern = new JRadioButton("Not Member");
-		membergroup = new ButtonGroup();
-		delete = new JButton("Delete Previous");
-		
-		membery.setActionCommand("Member");
-		membern.setActionCommand("Not Member");
-		
-		delete.addActionListener(new ButtonListener());
-		quantity.addActionListener(new ButtonListener());
-		membern.addActionListener(new ButtonListener());
-		membery.addActionListener(new ButtonListener());
-		
-		membergroup.add(membery);
-		membergroup.add(membern);
-		
-		text = new JTextArea();
-		scroll = new JScrollPane(text);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        text.setLineWrap(true);
-        text.setWrapStyleWord(true);
-        text.setEditable(false);
-        
-        subpanel8.add(quantitylabel);
-        subpanel8.add(quantity);
-        subpanel8.add(membery);
-        subpanel8.add(membern);
-        subpanel8.add(delete);
-        subpanel9.add(scroll, BorderLayout.CENTER);
-        
-        panel3.add(subpanel8, BorderLayout.SOUTH);
-		panel3.add(subpanel9, BorderLayout.CENTER);
+
+		properties.panel3.setLayout(new BorderLayout());
+
+		properties.subpanel8 = new JPanel();
+		properties.subpanel9 = new JPanel();
+		properties.subpanel9.setLayout(new BorderLayout());
+
+		properties.quantitylabel = new JLabel("Quantity: ");
+		properties.quantity = new JTextField(5);
+		properties.membery = new JRadioButton("Member");
+		properties.membern = new JRadioButton("Not Member");
+		properties.membergroup = new ButtonGroup();
+		properties.delete = new JButton("Delete Previous");
+
+		properties.membery.setActionCommand("Member");
+		properties.membern.setActionCommand("Not Member");
+
+		properties.delete.addActionListener(new ButtonListener());
+		properties.quantity.addActionListener(new ButtonListener());
+		properties.membern.addActionListener(new ButtonListener());
+		properties.membery.addActionListener(new ButtonListener());
+
+		properties.membergroup.add(properties.membery);
+		properties.membergroup.add(properties.membern);
+
+		properties.text = new JTextArea();
+		properties.scroll = new JScrollPane(properties.text);
+		properties.scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		properties.text.setLineWrap(true);
+		properties.text.setWrapStyleWord(true);
+		properties.text.setEditable(false);
+
+		properties.subpanel8.add(properties.quantitylabel);
+		properties.subpanel8.add(properties.quantity);
+		properties.subpanel8.add(properties.membery);
+		properties.subpanel8.add(properties.membern);
+		properties.subpanel8.add(properties.delete);
+		properties.subpanel9.add(properties.scroll, BorderLayout.CENTER);
+
+		properties.panel3.add(properties.subpanel8, BorderLayout.SOUTH);
+		properties.panel3.add(properties.subpanel9, BorderLayout.CENTER);
 		
 		// BUTTON PANEL
-		
-		buttons = new JPanel();
-		button1 = new JButton("Enter Item");
-		button2 = new JButton("Total");
-		button3 = new JButton("New Order");
-		buttons.setBackground(Color.black);
-		
-		button1.addActionListener(new ButtonListener());
-		button2.addActionListener(new ButtonListener());
-		button3.addActionListener(new ButtonListener());
-		
-		buttons.add(button1);
-		buttons.add(button2);
-		buttons.add(button3);
+
+		properties.buttons = new JPanel();
+		properties.button1 = new JButton("Enter Item");
+		properties.button2 = new JButton("Total");
+		properties.button3 = new JButton("New Order");
+		properties.buttons.setBackground(Color.black);
+
+		properties.button1.addActionListener(new ButtonListener());
+		properties.button2.addActionListener(new ButtonListener());
+		properties.button3.addActionListener(new ButtonListener());
+
+		properties.buttons.add(properties.button1);
+		properties.buttons.add(properties.button2);
+		properties.buttons.add(properties.button3);
 		
 		//panel2a
-		
-		subpanel1.setLayout(new GridLayout(3,1));
-		subpanel2.setLayout(new GridLayout(3,1));
-		subpanel3.setLayout(new GridLayout(2,1));
-		
-		subpanel1.setBorder(BorderFactory.createTitledBorder("Size"));
-		
-		small = new JRadioButton("Small");
-		medium = new JRadioButton("Medium");
-		large = new JRadioButton("Large");
-		group1 = new ButtonGroup();
-		
-		small.setActionCommand("Small");
-		medium.setActionCommand("Medium");
-		large.setActionCommand("Large");
-		
-		small.addActionListener(new ButtonListener());
-		medium.addActionListener(new ButtonListener());
-		large.addActionListener(new ButtonListener());
-		
-		group1.add(small);
-		group1.add(medium);
-		group1.add(large);
-		
-		subpanel1.add(small);
-		subpanel1.add(medium);
-		subpanel1.add(large);
-		
-		subpanel2.setBorder(BorderFactory.createTitledBorder("Type"));
-		
-		regular = new JRadioButton("Regular");
-		decafe = new JRadioButton("DeCafe");
-		roast = new JRadioButton("French Roast");
-		group2 = new ButtonGroup();
-		
-		regular.setActionCommand("Regular");
-		decafe.setActionCommand("DeCafe");
-		roast.setActionCommand("French Roast");
-		
-		regular.addActionListener(new ButtonListener());
-		decafe.addActionListener(new ButtonListener());
-		roast.addActionListener(new ButtonListener());
-		
-		group2.add(regular);
-		group2.add(decafe);
-		group2.add(roast);
-		
-		subpanel2.add(regular);
-		subpanel2.add(decafe);
-		subpanel2.add(roast);
-		
-		subpanel3.setBorder(BorderFactory.createTitledBorder("Extras"));
-		
-		cream = new JCheckBox("Cream");
-		sugar = new JCheckBox("Sugar");
-		
-		cream.addActionListener(new ButtonListener());
-		sugar.addActionListener(new ButtonListener());
-		
-		subpanel3.add(cream);
-		subpanel3.add(sugar);
-		
-		panel2a.add(subpanel1);
-		panel2a.add(subpanel2);
-		panel2a.add(subpanel3);
+
+		properties.subpanel1.setLayout(new GridLayout(3,1));
+		properties.subpanel2.setLayout(new GridLayout(3,1));
+		properties.subpanel3.setLayout(new GridLayout(2,1));
+
+		properties.subpanel1.setBorder(BorderFactory.createTitledBorder("Size"));
+
+		properties.small = new JRadioButton("Small");
+		properties.medium = new JRadioButton("Medium");
+		properties.large = new JRadioButton("Large");
+		properties.group1 = new ButtonGroup();
+
+		properties.small.setActionCommand("Small");
+		properties.medium.setActionCommand("Medium");
+		properties.large.setActionCommand("Large");
+
+		properties.small.addActionListener(new ButtonListener());
+		properties.medium.addActionListener(new ButtonListener());
+		properties.large.addActionListener(new ButtonListener());
+
+		properties.group1.add(properties.small);
+		properties.group1.add(properties.medium);
+		properties.group1.add(properties.large);
+
+		properties.subpanel1.add(properties.small);
+		properties.subpanel1.add(properties.medium);
+		properties.subpanel1.add(properties.large);
+
+		properties.subpanel2.setBorder(BorderFactory.createTitledBorder("Type"));
+
+		properties.regular = new JRadioButton("Regular");
+		properties.decafe = new JRadioButton("DeCafe");
+		properties.roast = new JRadioButton("French Roast");
+		properties.group2 = new ButtonGroup();
+
+		properties.regular.setActionCommand("Regular");
+		properties.decafe.setActionCommand("DeCafe");
+		properties.roast.setActionCommand("French Roast");
+
+		properties.regular.addActionListener(new ButtonListener());
+		properties.decafe.addActionListener(new ButtonListener());
+		properties.roast.addActionListener(new ButtonListener());
+
+		properties.group2.add(properties.regular);
+		properties.group2.add(properties.decafe);
+		properties.group2.add(properties.roast);
+
+		properties.subpanel2.add(properties.regular);
+		properties.subpanel2.add(properties.decafe);
+		properties.subpanel2.add(properties.roast);
+
+		properties.subpanel3.setBorder(BorderFactory.createTitledBorder("Extras"));
+
+		properties.cream = new JCheckBox("Cream");
+		properties.sugar = new JCheckBox("Sugar");
+
+		properties.cream.addActionListener(new ButtonListener());
+		properties.sugar.addActionListener(new ButtonListener());
+
+		properties.subpanel3.add(properties.cream);
+		properties.subpanel3.add(properties.sugar);
+
+		properties.panel2a.add(properties.subpanel1);
+		properties.panel2a.add(properties.subpanel2);
+		properties.panel2a.add(properties.subpanel3);
 		
 		//panel2b
-		
-		subpanel4 = new JPanel();
-		subpanel5 = new JPanel();
-		subpanel6 = new JPanel();
-		
-		subpanel4.setLayout(new GridLayout(5,1));
-		subpanel5.setLayout(new GridLayout(5,1));
-		subpanel6.setLayout(new GridLayout(2,1));
-		
-		subpanel4.setBorder(BorderFactory.createTitledBorder("Bagel"));
-		
-		white = new JRadioButton("White");
-		wheat = new JRadioButton("Wheat");
-		salt = new JRadioButton("Salt");
-		seseme = new JRadioButton("Seseme");
-		popy = new JRadioButton("Popy");
-		group4 = new ButtonGroup();
-		
-		white.setActionCommand("White");
-		wheat.setActionCommand("Wheat");
-		salt.setActionCommand("Salt");
-		seseme.setActionCommand("Seseme");
-		popy.setActionCommand("Popy");
-		
-		white.addActionListener(new ButtonListener());
-		wheat.addActionListener(new ButtonListener());
-		salt.addActionListener(new ButtonListener());
-		seseme.addActionListener(new ButtonListener());
-		popy.addActionListener(new ButtonListener());
-		
-		group4.add(white);
-		group4.add(wheat);
-		group4.add(salt);
-		group4.add(seseme);
-		group4.add(popy);
-		
-		subpanel4.add(white);
-		subpanel4.add(wheat);
-		subpanel4.add(salt);
-		subpanel4.add(seseme);
-		subpanel4.add(popy);
-		
-		subpanel5.setBorder(BorderFactory.createTitledBorder("Spreads"));
-		
-		cc = new JRadioButton("Cream Cheese ");
-		lcc = new JRadioButton("Lowfat Cream Cheese ");
-		gc = new JRadioButton("Garlic Cream ");
-		butter = new JRadioButton("Butter ");
-		jam = new JRadioButton("Jam ");
-		group5 = new ButtonGroup();
-		
-		cc.setActionCommand("Cream Cheese ");
-		lcc.setActionCommand("Lowfat Cream Cheese ");
-		gc.setActionCommand("Garlic Cream ");
-		butter.setActionCommand("Butter ");
-		jam.setActionCommand("Jam ");
-		
-		cc.addActionListener(new ButtonListener());
-		lcc.addActionListener(new ButtonListener());
-		gc.addActionListener(new ButtonListener());
-		butter.addActionListener(new ButtonListener());
-		jam.addActionListener(new ButtonListener());
-		
-		group5.add(cc);
-		group5.add(lcc);
-		group5.add(gc);
-		group5.add(butter);
-		group5.add(jam);
-		
-		subpanel5.add(cc);
-		subpanel5.add(lcc);
-		subpanel5.add(gc);
-		subpanel5.add(butter);
-		subpanel5.add(jam);
-		
-		subpanel6.setBorder(BorderFactory.createTitledBorder("Toppings"));
-		
-		lox = new JCheckBox("Lox");
-		novalox = new JCheckBox("Nova Lox");
-		
-		lox.addActionListener(new ButtonListener());
-		novalox.addActionListener(new ButtonListener());
-		
-		subpanel6.add(lox);
-		subpanel6.add(novalox);
-		
-		panel2b.add(subpanel4);
-		panel2b.add(subpanel5);
-		panel2b.add(subpanel6);
+
+		properties.subpanel4 = new JPanel();
+		properties.subpanel5 = new JPanel();
+		properties.subpanel6 = new JPanel();
+
+		properties.subpanel4.setLayout(new GridLayout(5,1));
+		properties.subpanel5.setLayout(new GridLayout(5,1));
+		properties.subpanel6.setLayout(new GridLayout(2,1));
+
+		properties.subpanel4.setBorder(BorderFactory.createTitledBorder("Bagel"));
+
+		properties.white = new JRadioButton("White");
+		properties.wheat = new JRadioButton("Wheat");
+		properties.salt = new JRadioButton("Salt");
+		properties.seseme = new JRadioButton("Seseme");
+		properties.popy = new JRadioButton("Popy");
+		properties.group4 = new ButtonGroup();
+
+		properties.white.setActionCommand("White");
+		properties.wheat.setActionCommand("Wheat");
+		properties.salt.setActionCommand("Salt");
+		properties.seseme.setActionCommand("Seseme");
+		properties.popy.setActionCommand("Popy");
+
+		properties.white.addActionListener(new ButtonListener());
+		properties.wheat.addActionListener(new ButtonListener());
+		properties.salt.addActionListener(new ButtonListener());
+		properties.seseme.addActionListener(new ButtonListener());
+		properties.popy.addActionListener(new ButtonListener());
+
+		properties.group4.add(properties.white);
+		properties.group4.add(properties.wheat);
+		properties.group4.add(properties.salt);
+		properties.group4.add(properties.seseme);
+		properties.group4.add(properties.popy);
+
+		properties.subpanel4.add(properties.white);
+		properties.subpanel4.add(properties.wheat);
+		properties.subpanel4.add(properties.salt);
+		properties.subpanel4.add(properties.seseme);
+		properties.subpanel4.add(properties.popy);
+
+		properties.subpanel5.setBorder(BorderFactory.createTitledBorder("Spreads"));
+
+		properties.cc = new JRadioButton("Cream Cheese ");
+		properties.lcc = new JRadioButton("Lowfat Cream Cheese ");
+		properties.gc = new JRadioButton("Garlic Cream ");
+		properties.butter = new JRadioButton("Butter ");
+		properties.jam = new JRadioButton("Jam ");
+		properties.group5 = new ButtonGroup();
+
+		properties.cc.setActionCommand("Cream Cheese ");
+		properties.lcc.setActionCommand("Lowfat Cream Cheese ");
+		properties.gc.setActionCommand("Garlic Cream ");
+		properties.butter.setActionCommand("Butter ");
+		properties.jam.setActionCommand("Jam ");
+
+		properties.cc.addActionListener(new ButtonListener());
+		properties.lcc.addActionListener(new ButtonListener());
+		properties.gc.addActionListener(new ButtonListener());
+		properties.butter.addActionListener(new ButtonListener());
+		properties.jam.addActionListener(new ButtonListener());
+
+		properties.group5.add(properties.cc);
+		properties.group5.add(properties.lcc);
+		properties.group5.add(properties.gc);
+		properties.group5.add(properties.butter);
+		properties.group5.add(properties.jam);
+
+		properties.subpanel5.add(properties.cc);
+		properties.subpanel5.add(properties.lcc);
+		properties.subpanel5.add(properties.gc);
+		properties.subpanel5.add(properties.butter);
+		properties.subpanel5.add(properties.jam);
+
+		properties.subpanel6.setBorder(BorderFactory.createTitledBorder("Toppings"));
+
+		properties.lox = new JCheckBox("Lox");
+		properties.novalox = new JCheckBox("Nova Lox");
+
+		properties.lox.addActionListener(new ButtonListener());
+		properties.novalox.addActionListener(new ButtonListener());
+
+		properties.subpanel6.add(properties.lox);
+		properties.subpanel6.add(properties.novalox);
+
+		properties.panel2b.add(properties.subpanel4);
+		properties.panel2b.add(properties.subpanel5);
+		properties.panel2b.add(properties.subpanel6);
 		
 		//panel2c
-		
-		subpanel7 = new JPanel();
-		
-		subpanel7.setLayout(new GridLayout());
-		subpanel7.setBorder(BorderFactory.createTitledBorder("Pastries"));
-		
-		list = new JList(pastrylist);
-		
-		list.addListSelectionListener(new ListListener());
-		
-		subpanel7.add(list);
-		panel2c.add(subpanel7);
-		
-		parent.add(panel1, BorderLayout.WEST);
-		parent.add(panel2a, BorderLayout.CENTER);
-		layout = (BorderLayout)parent.getLayout();
-		
-		product1.doClick();
-		membern.doClick();
+
+		properties.subpanel7 = new JPanel();
+
+		properties.subpanel7.setLayout(new GridLayout());
+		properties.subpanel7.setBorder(BorderFactory.createTitledBorder("Pastries"));
+
+		properties.list = new JList(properties.pastrylist);
+
+		properties.list.addListSelectionListener(new ListListener());
+
+		properties.subpanel7.add(properties.list);
+		properties.panel2c.add(properties.subpanel7);
+
+		properties.parent.add(properties.panel1, BorderLayout.WEST);
+		properties.parent.add(properties.panel2a, BorderLayout.CENTER);
+		properties.layout = (BorderLayout)properties.parent.getLayout();
+
+		properties.product1.doClick();
+		properties.membern.doClick();
 	}
 	
 	private class ButtonListener implements ActionListener
 	{
 		@Override
-		public void actionPerformed(ActionEvent arg0) 
+		public void actionPerformed(ActionEvent arg0)
 		{
-			if(product1.isSelected())
-			{					
-				parent.remove(layout.getLayoutComponent(BorderLayout.CENTER));
-				parent.add(panel2a, BorderLayout.CENTER);
-				parent.revalidate();
-				parent.repaint();
-				if(group1.getSelection() == null)
+			if(properties.product1.isSelected())
+			{
+				properties.parent.remove(properties.layout.getLayoutComponent(BorderLayout.CENTER));
+				properties.parent.add(properties.panel2a, BorderLayout.CENTER);
+				properties.parent.revalidate();
+				properties.parent.repaint();
+				if(properties.group1.getSelection() == null)
 				{
-					small.doClick();
+					properties.small.doClick();
 				}
-				if(group2.getSelection() == null)
+				if(properties.group2.getSelection() == null)
 				{
-					regular.doClick();
-				}
-			}
-			else if(product2.isSelected())
-			{				
-				parent.remove(layout.getLayoutComponent(BorderLayout.CENTER));
-				parent.add(panel2b, BorderLayout.CENTER);
-				parent.revalidate();
-				parent.repaint();
-				if(group4.getSelection() == null)
-				{
-					white.doClick();
+					properties.regular.doClick();
 				}
 			}
-			else if(product3.isSelected())
-			{				
-				parent.remove(layout.getLayoutComponent(BorderLayout.CENTER));
-				parent.add(panel2c, BorderLayout.CENTER);
-				parent.revalidate();
-				parent.repaint();
+			else if(properties.product2.isSelected())
+			{
+				properties.parent.remove(properties.layout.getLayoutComponent(BorderLayout.CENTER));
+				properties.parent.add(properties.panel2b, BorderLayout.CENTER);
+				properties.parent.revalidate();
+				properties.parent.repaint();
+				if(properties.group4.getSelection() == null)
+				{
+					properties.white.doClick();
+				}
+			}
+			else if(properties.product3.isSelected())
+			{
+				properties.parent.remove(properties.layout.getLayoutComponent(BorderLayout.CENTER));
+				properties.parent.add(properties.panel2c, BorderLayout.CENTER);
+				properties.parent.revalidate();
+				properties.parent.repaint();
 			}
 			if(arg0.getActionCommand() == "Enter Item")
 			{
-				if(!quantity.getText().isEmpty())
+				if(!properties.quantity.getText().isEmpty())
 				{
 					try
 					{
-						q = Integer.parseInt(quantity.getText());
+						properties.q = Integer.parseInt(properties.quantity.getText());
 					}
 					catch(NumberFormatException e)
 					{
-						q = 1;
+						properties.q = 1;
 					}
 				}
 				else
 				{
-					q = 1;
+					properties.q = 1;
 				}
-				
-				if(product1.isSelected())
+
+				if(properties.product1.isSelected())
 				{
-					coffee.getSelectedButton(group1, group2);
-					if(sugar.isSelected())
+					properties.coffee.getSelectedButton(properties.group1, properties.group2);
+					if(properties.sugar.isSelected())
 					{
-						coffee.getString().add("Extra Sugar");
-						sugar.doClick();
+						properties.coffee.getString().add("Extra Sugar");
+						properties.sugar.doClick();
 					}
-					if(cream.isSelected())
+					if(properties.cream.isSelected())
 					{
-						coffee.getString().add("Extra Cream");
-						cream.doClick();
+						properties.coffee.getString().add("Extra Cream");
+						properties.cream.doClick();
 					}
-					coffee.pricing();
-					for(int x = 0; x < q; x++)
+					properties.coffee.pricing();
+					for(int x = 0; x < properties.q; x++)
 					{
-						order.getOrder(coffee.getPrice(), coffee.getString());
+						properties.order.getOrder(properties.coffee.getPrice(), properties.coffee.getString());
 					}
-					q = 1;
-					coffee.clear();
-					small.doClick();
-					regular.doClick();
+					properties.q = 1;
+					properties.coffee.clear();
+					properties.small.doClick();
+					properties.regular.doClick();
 				}
-				else if(product2.isSelected())
+				else if(properties.product2.isSelected())
 				{
-					bagel.getSelectedButton(group4, group5);
-					if(lox.isSelected())
+					properties.bagel.getSelectedButton(properties.group4, properties.group5);
+					if(properties.lox.isSelected())
 					{
-						bagel.getString().add("Lox Topping");
-						lox.doClick();
+						properties.bagel.getString().add("Lox Topping");
+						properties.lox.doClick();
 					}
-					if(novalox.isSelected())
+					if(properties.novalox.isSelected())
 					{
-						bagel.getString().add("Nova Lox Topping");
-						novalox.doClick();
+						properties.bagel.getString().add("Nova Lox Topping");
+						properties.novalox.doClick();
 					}
-					bagel.pricing();
-					for(int x = 0; x < q; x++)
+					properties.bagel.pricing();
+					for(int x = 0; x < properties.q; x++)
 					{
-						order.getOrder(bagel.getPrice(), bagel.getString());
+						properties.order.getOrder(properties.bagel.getPrice(), properties.bagel.getString());
 					}
-					q = 1;
-					bagel.clear();
-					white.doClick();
-					group5.clearSelection();
+					properties.q = 1;
+					properties.bagel.clear();
+					properties.white.doClick();
+					properties.group5.clearSelection();
 				}
-				else if(product3.isSelected())
+				else if(properties.product3.isSelected())
 				{
-					pastry.getSelectedButton(indices, pastrylist);
-					pastry.pricing();
-					for(int x = 0; x < q; x++)
+					properties.pastry.getSelectedButton(properties.indices, properties.pastrylist);
+					properties.pastry.pricing();
+					for(int x = 0; x < properties.q; x++)
 					{
-						order.getOrder(pastry.getPrice(), pastry.getString());
+						properties.order.getOrder(properties.pastry.getPrice(), properties.pastry.getString());
 					}
-					q = 1;
-					pastry.clear();
+					properties.q = 1;
+					properties.pastry.clear();
 				}
-				
-				printOrder(order.getOrder(), order.getOrderprice());
-				quantity.setText("");
-				
+
+				printOrder(properties.order.getOrder(), properties.order.getOrderprice());
+				properties.quantity.setText("");
+
 			}
 			else if(arg0.getActionCommand() == "New Order")
 			{
-				order.clear();
-				product1.doClick();
-				small.doClick();
-				regular.doClick();
-				white.doClick();
-				group5.clearSelection();
-				text.setText("");
+				properties.order.clear();
+				properties.product1.doClick();
+				properties.small.doClick();
+				properties.regular.doClick();
+				properties.white.doClick();
+				properties.group5.clearSelection();
+				properties.text.setText("");
 			}
 			else if(arg0.getActionCommand() == "Total")
 			{
-				text.append(String.format("%n%100s%2s%.2f", "Subtotal: ","$", (float)order.calculateSubtotal()/100));
-				text.append(String.format("%n%102s%2s%.2f", "Total: ","$", (float)order.calculateTotal(isMember)/100));
+				properties.text.append(String.format("%n%100s%2s%.2f", "Subtotal: ","$", (float)properties.order.calculateSubtotal()/100));
+				properties.text.append(String.format("%n%102s%2s%.2f", "Total: ","$", (float)properties.order.calculateTotal(properties.isMember)/100));
 			}
 			if(arg0.getActionCommand() == "Delete Previous")
 			{
-				int i = order.getOrder().size()-1;
-				int k = order.getOrderprice().size()-1;
+				int i = properties.order.getOrder().size()-1;
+				int k = properties.order.getOrderprice().size()-1;
 				boolean yes = false;
 				int y = i;
 				int x = k;
-				
+
 				while(!yes && !(i == -1 && k == -1))
 				{
-					if(order.getOrder().get(y).equals("Coffee")||order.getOrder().get(y).equals("Bagel")||order.getOrder().get(y).equals("Pastry"))
+					if(properties.order.getOrder().get(y).equals("Coffee")||properties.order.getOrder().get(y).equals("Bagel")||properties.order.getOrder().get(y).equals("Pastry"))
 					{
-						order.getOrder().remove(y);
+						properties.order.getOrder().remove(y);
 						yes = true;
 					}
 					else
 					{
-						order.getOrder().remove(y);
-						order.getOrderprice().remove(x);
+						properties.order.getOrder().remove(y);
+						properties.order.getOrderprice().remove(x);
 						y--;
 						x--;
 					}
 				}
-				printOrder(order.getOrder(), order.getOrderprice());
-				
+				printOrder(properties.order.getOrder(), properties.order.getOrderprice());
+
 			}
-			if(membern.isSelected())
+			if(properties.membern.isSelected())
 			{
-				isMember = false;
+				properties.isMember = false;
 			}
-			else if(membery.isSelected())
+			else if(properties.membery.isSelected())
 			{
-				isMember = true;
+				properties.isMember = true;
 			}
+		}
+	}
+
+	class ButtonListenerProduct1 implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent arg0)
+		{
+			if(properties.product1.isSelected())
+			{
+				properties.parent.remove(properties.layout.getLayoutComponent(BorderLayout.CENTER));
+				properties.parent.add(properties.panel2a, BorderLayout.CENTER);
+				properties.parent.revalidate();
+				properties.parent.repaint();
+				if(properties.group1.getSelection() == null)
+				{
+					properties.small.doClick();
+				}
+				if(properties.group2.getSelection() == null)
+				{
+					properties.regular.doClick();
+				}
+			}
+
 		}
 	}
 		
@@ -601,7 +528,7 @@ public class BagelApp extends JFrame{
 			if (!arg0.getValueIsAdjusting())
 			{
 	            source = (JList)arg0.getSource();
-	            indices = source.getSelectedIndices();
+				properties.indices = source.getSelectedIndices();
 	        }
 		}
 	}
@@ -609,17 +536,17 @@ public class BagelApp extends JFrame{
 	private void printOrder(ArrayList<String> list, ArrayList<Integer> list2)
 	{
 		int y = 0;
-		text.setText("");
+		properties.text.setText("");
 		for(int x = 0; x < list.size(); x++)
 		{
 			if(list.get(x).equals("Coffee")||list.get(x).equals("Bagel")||list.get(x).equals("Pastry"))
 			{
-				text.append(list.get(x)+"\n");
+				properties.text.append(list.get(x)+"\n");
 			}
 			else
 			{
-				text.append("           "+list.get(x)+"\n");
-				text.append(String.format("%107s%.2f\n","$", (float)list2.get(y)/100));
+				properties.text.append("           "+list.get(x)+"\n");
+				properties.text.append(String.format("%107s%.2f\n","$", (float)list2.get(y)/100));
 				y++;
 			}
 		}
@@ -632,18 +559,18 @@ public class BagelApp extends JFrame{
 	
 	//Getters and Setters
 	public JTextArea getText() {
-		return text;
+		return properties.text;
 	}
 
 	public void setText(JTextArea text) {
-		this.text = text;
+		this.properties.text = text;
 	}
 	
 	public boolean isMember() {
-		return isMember;
+		return properties.isMember;
 	}
 
 	public void setMember(boolean isMember) {
-		this.isMember = isMember;
+		this.properties.isMember = isMember;
 	}
 }

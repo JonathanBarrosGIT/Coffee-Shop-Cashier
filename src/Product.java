@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * Created by Jonathan Correia de Barros on 10/05/16.
+ * By Jonathan Correia de Barros on 10/05/16.
  *
  * Application of Extract Superclass in order to fix the Code Smell: Duplicated Code.
  * This Code Smell has been found on the classes: Pastry, Bagel and Coffee where they have identical properties.
