@@ -63,5 +63,6 @@ public class Order
 			total = (int)(total*memberdiscount);
 		}
 		return total;
-	}	
+	}
+
 }
