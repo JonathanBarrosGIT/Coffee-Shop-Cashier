@@ -92,7 +92,7 @@ public class BagelApp extends JFrame{
 
 	public boolean isMember;
 
-	public Order order = new Order();
+	public Order order = Order.instance();
 	public Coffee coffee = new Coffee();
 	public Bagel bagel = new Bagel();
 	public Pastry pastry = new Pastry();
@@ -104,42 +104,42 @@ public class BagelApp extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout(10,10));
 		setBackground(Color.LIGHT_GRAY);
-		
+
 		buildPanel();
 		add(panel3, BorderLayout.CENTER);
 		add(title, BorderLayout.NORTH);
 		add(buttons, BorderLayout.SOUTH);
 		add(parent, BorderLayout.WEST);
-		
+
 		setVisible(true);
 	}
-	
+
 	private void buildPanel()
 	{
 		/* A very big build method because
 		 * all the panels are pre-made
 		 */
-		
+
 		// PARENT PANEL
 
 		parent.setLayout(new BorderLayout(10,10));
 
 		title = new JLabel("Order Entry Screen");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		// PANEL1
-		
+
 		panel1.setBorder(BorderFactory.createTitledBorder("Products"));
 		panel1.setLayout(new GridLayout(3,1));
-		
+
 		productgroup.add(product1);
 		productgroup.add(product2);
 		productgroup.add(product3);
-		
+
 		product1.addActionListener(new ButtonListener());
 		product2.addActionListener(new ButtonListener());
 		product3.addActionListener(new ButtonListener());
-		
+
 		panel1.add(product1);
 		panel1.add(product2);
 		panel1.add(product3);
@@ -293,7 +293,7 @@ public class BagelApp extends JFrame{
 
 		product1.doClick();
 		membern.doClick();
-		
+
 		// PANEL3
 
 		panel3.setLayout(new BorderLayout());
@@ -326,7 +326,7 @@ public class BagelApp extends JFrame{
 
 		panel3.add(subpanel8, BorderLayout.SOUTH);
 		panel3.add(subpanel9, BorderLayout.CENTER);
-		
+
 		// BUTTON PANEL
 
 		buttons.setBackground(Color.black);
@@ -338,7 +338,7 @@ public class BagelApp extends JFrame{
 		buttons.add(button1);
 		buttons.add(button2);
 		buttons.add(button3);
-		
+
 
 	}
 
@@ -524,7 +524,7 @@ public class BagelApp extends JFrame{
 	        }
 		}
 	}
-	
+
 	public void printOrder(ArrayList<String> list, ArrayList<Integer> list2)
 	{
 		int y = 0;
@@ -548,7 +548,7 @@ public class BagelApp extends JFrame{
 	{
 		BagelApp app = new BagelApp();
 	}
-	
+
 	//Getters and Setters
 	public JTextArea getText() {
 		return text;

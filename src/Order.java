@@ -1,20 +1,38 @@
 import java.util.ArrayList;
 
-public class Order 
+public class Order
 {
 	private final double memberdiscount = 0.9;
 	private final double tax = 0.08;
+
 	private int subtotal;
 	private int total;
+
 	private ArrayList<Integer> orderprice = new ArrayList<Integer>();
 	private ArrayList<String> order = new ArrayList<String>();
-	
-	Order()
+
+	/**
+	 * By Jonathan Correia de Barros on 14/05/16.
+	 *
+	 * Application of - Singleton - in order to avoid more than one instantiation where there only may have one
+	 * object instiated of Order.
+	 */
+
+	private static Order instance;
+
+	private Order()
 	{
 		subtotal = 0;
 		total = 0;
 	}
-	
+
+	public static Order instance(){
+		if(instance == null){
+			instance = new Order();
+		}
+		return instance;
+	}
+
 	public void getOrder(ArrayList<Integer> list, ArrayList<String> list2)
 	{
 		for(int x = 0; x < list2.size(); x++)
@@ -26,7 +44,7 @@ public class Order
 			orderprice.add(list.get(x));
 		}
 	}
-	
+
 	public int calculateSubtotal()
 	{
 		for(int x = 0; x < orderprice.size(); x++)
@@ -35,7 +53,7 @@ public class Order
 		}
 		return subtotal;
 	}
-	
+
 	public void clear()
 	{
 		total = 0;
@@ -43,7 +61,7 @@ public class Order
 		orderprice.clear();
 		order.clear();
 	}
-	
+
 	public ArrayList<Integer> getOrderprice() {
 		return orderprice;
 	}

@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * Application of - Extract Superclass - in order to fix the Code Smell: Duplicated Code.
  * This Code Smell has been found on the classes: Pastry, Bagel and Coffee where they have identical properties.
  */
+
 public abstract class Products {
 
     protected ArrayList<String> string = new ArrayList<>();
